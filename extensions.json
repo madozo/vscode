@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.black-formatter",
+        "BazelBuild.vscode-bazel",
+        "eamodio.gitlens",
+        "KevinRose.vsc-python-indent",
+        "augustocdias.tasks-shell-input"
+    ]
+}

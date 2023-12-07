@@ -1,0 +1,59 @@
+{
+    // editor
+    "workbench.editor.wrapTabs": true,
+    "editor.cursorBlinking": "phase",
+    "terminal.integrated.env.linux": {
+        "PYTHONPATH": "${workspaceFolder}/.."
+    },
+
+    //pylance extension
+    "python.autoComplete.extraPaths": [
+        //"${workspaceFolder}/../..",
+    ],
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.extraPaths": [
+        //"${workspaceFolder}/../..",
+    ],
+    "python.analysis.autoSearchPaths": true,
+
+    // formatting
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true,
+    },
+    // black extension
+    "black-formatter.args": ["--line-length=120"],
+    
+    // pylint extension
+    "pylint.args": [
+        "--disable=C0116,C0114,C0115",
+        "--max-line-length=120",
+        "--variable-naming-style=snake_case"
+    ],
+
+    // flake8 extension
+    "flake8.args": ["--max-line-length=120"],
+
+    // autoDocString extension
+    "autoDocstring.docstringFormat": "google", 
+
+    // performance 
+    "files.insertFinalNewline": true,
+    "files.watcherExclude": {
+        "**/__pycache__": true,
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/**": true,
+        "bazel-*/**": true,
+    },
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/.DS_Store": true,
+        "**/.git": true,
+        "**/.hg": true,
+        "**/.svn": true,
+        "**/Thumbs.db": true,
+        "bazel-*/**": true,
+    },
+
+    }

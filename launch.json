@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "python: debug current file",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "stopOnEntry": true,
+            "console": "integratedTerminal",
+            "env": {"PYTHONPATH": "${workspaceFolder}/roles/expired-releases-check/files"}
+        },
+        {
+            "name": "python: attach to bazel debug",
+            "type": "python",
+            "request": "attach",
+            "pathMappings": [
+                {
+                    "localRoot": "${workspaceFolder}",
+                    "remoteRoot": "${workspaceFolder}",
+                }
+            ],
+            "connect": {
+                "host": "localhost",
+                "port": 5679
+            },
+            "preLaunchTask": "bazel: background task to debug current file",
+        }
+    ]
+}

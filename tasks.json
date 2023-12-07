@@ -1,0 +1,174 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "echo workspaceRoot",
+            "type": "shell",
+            "command": "echo ${workspaceRoot}",
+            "problemMatcher": []
+        },
+        {
+            "label": "gh: browse line",
+            "type": "shell",
+            "command": "gh",
+            "args": [
+                "browse",
+                "${relativeFile}:${lineNumber}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "bazel: build current file",
+            "type": "shell",
+            "command": "bazel",
+            "args": [
+                "build",
+                "${input:pickSourceTarget}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "gh: browse line",
+            "type": "shell",
+            "command": "gh",
+            "args": [
+                "browse",
+                "${relativeFile}:${lineNumber}",
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "bazel: run current file",
+            "type": "shell",
+            "command": "bazel",
+            "args": [
+                "run",
+                "${input:pickSourceTarget}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "bazel: test current file",
+            "type": "shell",
+            "command": "bazel",
+            "args": [
+                "test",
+                "--test_output=all",
+                "${input:pickSourceTarget}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "bazel: build selected target",
+            "type": "shell",
+            "command": "bazel",
+            "args": [
+                "build",
+                "${input:pickGlobalTarget}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "bazel: test selected target",
+            "type": "shell",
+            "command": "bazel",
+            "args": [
+                "test",
+                "${input:pickGlobalTarget}"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "bazel: queury curry target",
+            "type": "shell",
+            "command": "bazel",
+            "args": [
+                "query",
+                "'deps(${input:pickSourceTarget})'",
+                "--output",
+                "graph"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "bazel: query selected target",
+            "type": "shell",
+            "command": "bazel",
+            "args": [
+                "query",
+                "'deps(${input:pickGlobalTarget})'"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "bazel: background task to debug current file",
+            "type": "shell",
+            "isBackground": true,
+            "command": "bazel",
+            "args": [
+                "run",
+                "--run_under=\"${command:python.interpreterPath}",
+                "-m",
+                "debugpy",
+                "--listen",
+                "localhost:5679",
+                "--log-to-stderr",
+                "--wait-for-client\"",
+                "${input:pickSourceTarget}"
+            ],
+            "problemMatcher": [
+                {
+                    "owner": "custom",
+                    "pattern": [
+                        {
+                            "regexp": ".",
+                            "file": 1,
+                            "line": 1,
+                            "column": 1,
+                            "message": 1
+                        }
+                    ],
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": {
+                            "regexp": ".*"
+                        },
+                        "endsPattern": {
+                            "regexp": ".*wait_for_client.*"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "label": "stop all tasks",
+            "command": "echo ${input:terminate}",
+            "type": "shell",
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {   
+            "id": "pickGlobalTarget",
+            "type": "command",
+            "command": "shellCommand.execute",  //required extension: Tasks Shell Input
+            "args": {
+                "command": "bazel query //${workspaceFolderBasename}/..."
+            }   
+        },
+        {   
+            "id": "pickSourceTarget",
+            "type": "command",
+            "command": "shellCommand.execute",  //required extension: Tasks Shell Input
+            "args": {
+               "command": "${workspaceFolder}/.vscode/.bazel_query_target_from_source.sh ${fileBasename}"
+            }   
+        },
+        {
+            "id": "terminate",
+            "type": "command",
+            "command": "workbench.action.tasks.terminate",
+            "args": "terminateAll"
+        }
+    ],
+}
