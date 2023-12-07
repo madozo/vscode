@@ -161,7 +161,7 @@
             "type": "command",
             "command": "shellCommand.execute",  //required extension: Tasks Shell Input
             "args": {
-               "command": "${workspaceFolder}/.vscode/.bazel_query_target_from_source.sh ${fileBasename}"
+               "command": "${workspaceFolder}/.vscode/bazel_query_target_from_source.sh ${fileBasename}"
             }   
         },
         {
